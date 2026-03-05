@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --color-glass-bgo: rgba(20, 20, 25, 0.4);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-border-hover: rgba(255, 255, 255, 0.2);
+  --color-glass-text: #ffffff;
+  --color-glass-text-muted: #a1a1aa;
+  --color-glass-accent: #818cf8;
+  /* Indigo accent */
+  --color-glass-accent-glow: rgba(129, 140, 248, 0.4);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #050505;
+    color: var(--color-glass-text);
+    font-family: var(--font-sans);
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* Noise texture over dark background */
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(56, 30, 114, 0.3) 0%, transparent 40%),
+      radial-gradient(ellipse at 80% 80%, rgba(30, 41, 114, 0.3) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 50%, rgba(9, 9, 14, 1) 0%, #050505 100%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom Scrollbar for a premium feel */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@layer components {
+
+  /* Ultra-premium glass panel */
+  .glass-panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow:
+      0 4px 24px -1px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Inner ambient light leak */
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    z-index: 1;
+  }
+
+  .glass-panel-interactive {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 1rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Smoother apple-like curve */
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+
+  .glass-panel-interactive:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-color: var(--color-glass-border-hover);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .glass-panel-interactive:active {
+    transform: translateY(0) scale(0.99);
+    transition-duration: 0.1s;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* The actual Panic Button - needs to look dangerous but beautiful */
+  .panic-button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.05) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    box-shadow:
+      0 4px 15px rgba(239, 68, 68, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: #fca5a5;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 9999px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panic-button:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(220, 38, 38, 0.1) 100%);
+    box-shadow:
+      0 8px 25px rgba(239, 68, 68, 0.3),
+      0 0 0 1px rgba(239, 68, 68, 0.4),
+      inset 0 1px 0 rgba(255, 150, 150, 0.3);
+    border-color: rgba(239, 68, 68, 0.6);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .panic-button:active {
+    transform: translateY(1px) scale(0.96);
+    transition-duration: 0.1s;
+  }
+
+  .panic-button-active {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow:
+      0 10px 30px rgba(239, 68, 68, 0.5),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    border: 1px solid #f87171;
+    color: #fff;
+    border-radius: 9999px;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Utility classes */
+  .text-glow {
+    text-shadow: 0 0 12px var(--color-glass-accent-glow);
+  }
+
+  .text-glow-red {
+    text-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+  }
+
+  /* Completion styles */
+  .glass-panel-completed {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%) !important;
+    border-color: rgba(16, 185, 129, 0.4) !important;
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      0 0 15px rgba(16, 185, 129, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .glass-panel-completed span,
+  .glass-panel-completed h4 {
+    color: #6ee7b7 !important;
+  }
+
+  .glass-panel-completed:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%) !important;
+    border-color: rgba(16, 185, 129, 0.6) !important;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 10, 0.3),
+      0 0 20px rgba(16, 185, 129, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .check-mark-active {
+    color: #10b981 !important;
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+  }
+}
