@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH 120 — Recitation Çözümleri</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags:'ams' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1209;
+    --paper:#faf6ee;
+    --cream:#f0e8d5;
+    --gold:#b8860b;
+    --rust:#8b3a0f;
+    --muted:#6b5c45;
+    --divider:#d4c4a0;
+    --week-bg:#fff9f0;
+    --tag-q:#e8dcc8;
+    --pre-bg:#1c1410;
+    --accent:#c0392b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4',serif;
+    font-size:17px;
+    line-height:1.75;
+    max-width:900px;
+    margin:0 auto;
+    padding:2rem 1.5rem 4rem;
+  }
+  /* ── HEADER ── */
+  header{
+    text-align:center;
+    border-bottom:3px double var(--gold);
+    padding-bottom:1.5rem;
+    margin-bottom:2.5rem;
+  }
+  header h1{
+    font-family:'Playfair Display',serif;
+    font-size:2.4rem;
+    color:var(--rust);
+    letter-spacing:.02em;
+    margin-bottom:.3rem;
+  }
+  header p{
+    color:var(--muted);
+    font-size:.95rem;
+    font-style:italic;
+  }
+  /* ── TOC ── */
+  nav.toc{
+    background:var(--cream);
+    border:1px solid var(--divider);
+    border-radius:4px;
+    padding:1rem 1.4rem;
+    margin-bottom:2.5rem;
+    font-size:.93rem;
+  }
+  nav.toc h2{
+    font-family:'Playfair Display',serif;
+    font-size:1rem;
+    color:var(--gold);
+    margin-bottom:.6rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  nav.toc ol{margin-left:1.2rem;color:var(--muted);}
+  nav.toc a{color:var(--rust);text-decoration:none;}
+  nav.toc a:hover{text-decoration:underline;}
+  /* ── WEEK SECTION ── */
+  section.week{
+    border:1px solid var(--divider);
+    border-radius:6px;
+    margin-bottom:2.5rem;
+    overflow:hidden;
+    box-shadow:2px 3px 12px rgba(0,0,0,.06);
+  }
+  section.week > .week-header{
+    background:var(--cream);
+    border-bottom:2px solid var(--divider);
+    padding:.9rem 1.4rem;
+    display:flex;
+    align-items:baseline;
+    gap:1rem;
+    cursor:pointer;
+    user-select:none;
+  }
+  .week-header h2{
+    font-family:'Playfair Display',serif;
+    font-size:1.35rem;
+    color:var(--rust);
+  }
+  .week-header .topic{
+    font-style:italic;
+    font-size:.9rem;
+    color:var(--muted);
+  }
+  .week-header .toggle{
+    margin-left:auto;
+    color:var(--gold);
+    font-size:.85rem;
+    font-family:'JetBrains Mono',monospace;
+  }
+  section.week .week-body{
+    background:var(--week-bg);
+    padding:1rem 1.4rem 1.4rem;
+  }
+  /* hide/show */
+  section.week .week-body{display:block;}
+  section.week.collapsed .week-body{display:none;}
+  /* ── QUESTION CARD ── */
+  .qcard{
+    border:1px solid var(--divider);
+    border-radius:4px;
+    margin:1.2rem 0;
+    overflow:hidden;
+    background:#fff;
+  }
+  .qcard .qheader{
+    background:var(--tag-q);
+    padding:.45rem .9rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.82rem;
+    color:var(--rust);
+    font-weight:600;
+    letter-spacing:.05em;
+    border-bottom:1px solid var(--divider);
+  }
+  .qcard .qbody{padding:.9rem 1.1rem;}
+  /* ── BLOCK LABELS ── */
+  .block{margin:1rem 0;}
+  .block-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.78rem;
+    font-weight:600;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:.25rem .6rem;
+    display:inline-block;
+    border-radius:3px;
+    margin-bottom:.5rem;
+  }
+  .bt-orig{background:#e8f0fe;color:#1a56db;}
+  .bt-pre{background:#fde8f0;color:#9b1f5e;}
+  .bt-sol{background:#e8f5e9;color:#1b5e20;}
+  .bt-note{background:#fff3e0;color:#7c4700;}
+  /* ── STEPS ── */
+  .steps{list-style:none;padding:0;}
+  .steps li{
+    padding:.4rem 0 .4rem 1.6rem;
+    position:relative;
+    border-left:2px solid var(--divider);
+    margin-left:.4rem;
+    margin-bottom:.2rem;
+  }
+  .steps li::before{
+    content:counter(step);
+    counter-increment:step;
+    position:absolute;
+    left:-.7rem;
+    top:.45rem;
+    width:1.3rem;
+    height:1.3rem;
+    border-radius:50%;
+    background:var(--gold);
+    color:#fff;
+    font-size:.7rem;
+    font-family:'JetBrains Mono',monospace;
+    display:flex;align-items:center;justify-content:center;
+  }
+  ol.steps{counter-reset:step;}
+  .verify{
+    background:#f0fff0;
+    border-left:3px solid #2e7d32;
+    padding:.4rem .7rem;
+    font-size:.9rem;
+    margin-top:.6rem;
+    border-radius:0 3px 3px 0;
+  }
+  .verify strong{color:#2e7d32;}
+  /* ── TAKEAWAY BOX ── */
+  .takeaway{
+    background:#fffdf5;
+    border:1px dashed var(--gold);
+    border-radius:4px;
+    padding:.7rem 1rem;
+    margin-top:.8rem;
+    font-size:.93rem;
+  }
+  .takeaway strong{color:var(--gold);}
+  .formula-box{
+    background:var(--cream);
+    border:1px solid var(--divider);
+    border-radius:4px;
+    padding:.5rem 1rem;
+    margin:.5rem 0;
+    text-align:center;
+  }
+  /* ── DNE badge ── */
+  .dne{
+    display:inline-block;
+    background:var(--accent);
+    color:#fff;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.75rem;
+    padding:.1rem .5rem;
+    border-radius:3px;
+    vertical-align:middle;
+  }
+  .exists{
+    display:inline-block;
+    background:#2e7d32;
+    color:#fff;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.75rem;
+    padding:.1rem .5rem;
+    border-radius:3px;
+    vertical-align:middle;
+  }
+  /* MathJax overflow */
+  mjx-container{overflow-x:auto;max-width:100%;}
+  @media(max-width:600px){body{padding:1rem .8rem 3rem;}header h1{font-size:1.7rem;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>MATH 120 — Calculus</h1>
+  <p>Recitation Çözümleri · Spring 2025–2026 · Hafta 1–6 · Tam Çözüm Kılavuzu</p>
+</header>
+
+<nav class="toc">
+  <h2>İçindekiler</h2>
+  <ol>
+    <li><a href="#w1">Hafta 1 — Sequences (Diziler)</a></li>
+    <li><a href="#w2">Hafta 2 — Series: Convergence &amp; Sums</a></li>
+    <li><a href="#w3">Hafta 3 — Power Series, Radius of Convergence</a></li>
+    <li><a href="#w4">Hafta 4 — Maclaurin &amp; Taylor Series</a></li>
+    <li><a href="#w5">Hafta 5 — Vectors, Lines &amp; Planes in ℝ³</a></li>
+    <li><a href="#w6">Hafta 6 — Multivariable Limits &amp; Continuity</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ WEEK 1 ══ -->
+<section class="week" id="w1">
+<div class="week-header" onclick="this.parentElement.classList.toggle('collapsed')">
+  <h2>Hafta 1</h2>
+  <span class="topic">Sequences — Limit of a Sequence, Recursive Sequences</span>
+  <span class="toggle">[daralt/genişlet]</span>
+</div>
+<div class="week-body">
+
+<!-- Q1 -->
+<div class="qcard">
+<div class="qheader">SORU 1 — Limit of a Sequence (4 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find the limit of the sequence $\{a_n\}$, where</p>
+<p>(a) $a_n = \dfrac{\cos(4n)}{n+2}$ &emsp; (b) $a_n = n - \sqrt{n^2 - 4n}$ &emsp; (c) $a_n = \left(\dfrac{n+2}{n+1}\right)^n$ &emsp; (d) $a_n = \dfrac{n!}{n^n}$</p>
+</div>
+
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<ul>
+  <li><strong>Squeeze Theorem (Sıkıştırma Teoremi):</strong> Eğer $b_n \le a_n \le c_n$ ve $\lim b_n = \lim c_n = L$ ise $\lim a_n = L$.</li>
+  <li><strong>Temel limit:</strong> $\displaystyle\lim_{n\to\infty}\left(1+\frac{1}{n}\right)^n = e$.</li>
+  <li><strong>Rationalization (Eşlenik çarpma):</strong> $\sqrt{A}-\sqrt{B}$ formunu sadeleştirme tekniği.</li>
+  <li><strong>Factorial bound:</strong> $n! \le n^n$ olduğundan $0 \le n!/n^n \le 1/n$.</li>
+</ul>
+</div>
+
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $a_n = \dfrac{\cos(4n)}{n+2}$</p>
+<ol class="steps">
+<li>$\cos(4n)$ tüm $n$ için sınırlıdır: $-1 \le \cos(4n) \le 1$.</li>
+<li>Squeeze Theorem uygula: $\dfrac{-1}{n+2} \le \dfrac{\cos(4n)}{n+2} \le \dfrac{1}{n+2}$.</li>
+<li>Her iki sınır da $0$'a gider. Dolayısıyla $\displaystyle\lim_{n\to\infty} a_n = \boxed{0}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $a_n = n - \sqrt{n^2 - 4n}$</p>
+<ol class="steps">
+<li><strong>Rationalization:</strong> payı ve paydayı eşleniğiyle çarp:
+$$a_n = \frac{(n-\sqrt{n^2-4n})(n+\sqrt{n^2-4n})}{n+\sqrt{n^2-4n}} = \frac{n^2-(n^2-4n)}{n+\sqrt{n^2-4n}} = \frac{4n}{n+\sqrt{n^2-4n}}.$$</li>
+<li>Payı ve paydayı $n$'e böl:
+$$a_n = \frac{4}{1+\sqrt{1-\frac{4}{n}}}.$$</li>
+<li>$n\to\infty$ limitini al: $\dfrac{4}{1+\sqrt{1-0}} = \dfrac{4}{2} = \boxed{2}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $a_n = \left(\dfrac{n+2}{n+1}\right)^n$</p>
+<ol class="steps">
+<li>İfadeyi yeniden yaz: $\dfrac{n+2}{n+1} = 1 + \dfrac{1}{n+1}$.</li>
+<li>Dolayısıyla $a_n = \left(1+\dfrac{1}{n+1}\right)^n$.</li>
+<li>$\left(1+\dfrac{1}{n+1}\right)^{n+1} \to e$ (temel limit). $n$ yerine $(n+1)$'e böleceğiz:
+$$a_n = \left(1+\frac{1}{n+1}\right)^{n+1}\cdot \left(1+\frac{1}{n+1}\right)^{-1} \to e\cdot 1 = \boxed{e}.$$</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $a_n = \dfrac{n!}{n^n}$</p>
+<ol class="steps">
+<li>$n! = 1\cdot 2\cdot 3\cdots n$ ve $n^n = n\cdot n\cdot n\cdots n$ ($n$ tane).</li>
+<li>Her çarpanı karşılıklı karşılaştır: $\dfrac{k}{n} \le 1$ her $k$ için, ve birinci çarpan $\dfrac{1}{n}$:
+$$0 \le \frac{n!}{n^n} = \frac{1}{n}\cdot\frac{2}{n}\cdots\frac{n}{n} \le \frac{1}{n}\cdot 1\cdots 1 = \frac{1}{n}.$$</li>
+<li>Squeeze Theorem: $0 \le a_n \le \dfrac{1}{n}\to 0$, yani $\displaystyle\lim_{n\to\infty} a_n = \boxed{0}$.</li>
+</ol>
+
+<div class="verify"><strong>Verification Note:</strong> (c) için: $e\approx 2.718$; $n=100$ denersek $\left(\frac{102}{101}\right)^{100}\approx e\cdot(101/102)\approx 2.691$ — tutarlı.</div>
+</div>
+
+<div class="takeaway">
+<strong>⭐ Key Takeaways:</strong>
+<ul>
+  <li><strong>Önemli İpucu:</strong> Sınırlı fonksiyon / $n$ → Squeeze Theorem. $n - \sqrt{\cdot}$ → Rationalization. $(\cdots)^n$ tabanı 1'e yakınsa → $e^{\lim n\cdot\ln(\text{taban})}$ veya temel limit formu.</li>
+  <li><strong>Ezberlenecekler:</strong>
+    <div class="formula-box">$$\lim_{n\to\infty}\left(1+\frac{x}{n}\right)^n = e^x \qquad \text{ve} \qquad \lim_{n\to\infty}\frac{n!}{n^n}=0.$$</div>
+  </li>
+</ul>
+</div>
+</div></div>
+
+<!-- Q2 -->
+<div class="qcard">
+<div class="qheader">SORU 2 — Piecewise Sequence</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Let $\{a_n\}$ be the sequence given as: $a_n = \dfrac{2}{2n^3+n+1}$ if $n$ is even, $a_n = \dfrac{-3}{n^2+3n+5}$ if $n$ is odd. Find $\displaystyle\lim_{n\to\infty} a_n$ if it exists.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p><strong>Subsequence Theorem:</strong> $\lim_{n\to\infty} a_n = L \iff \lim_{k\to\infty} a_{2k} = L$ ve $\lim_{k\to\infty} a_{2k+1} = L$ (tüm alt diziler aynı limite sahip olmalı).</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>Çift alt dizi: $\displaystyle\lim_{k\to\infty} a_{2k} = \lim_{k\to\infty}\frac{2}{2(2k)^3+(2k)+1} = \lim_{k\to\infty}\frac{2}{16k^3+2k+1} = 0$.</li>
+<li>Tek alt dizi: $\displaystyle\lim_{k\to\infty} a_{2k+1} = \lim_{k\to\infty}\frac{-3}{(2k+1)^2+3(2k+1)+5} = 0$.</li>
+<li>Her iki alt dizi de $0$'a gider. Dolayısıyla $\displaystyle\lim_{n\to\infty}a_n = \boxed{0}$.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Piecewise tanımlı bir dizinin limitini bulmak için tüm alt dizilerin (subsequences) aynı limite sahip olması gerekir. Aksi hâlde limit mevcut değildir.</div>
+</div></div>
+
+<!-- Q3 -->
+<div class="qcard">
+<div class="qheader">SORU 3 — $a_n = \sin(\pi n)$</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find the limit of the sequence $\{a_n\}$ where $a_n = \sin(\pi n)$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$n$ bir tam sayı olduğundan $\sin(\pi n) = 0$ her $n \in \mathbb{Z}$ için.</li>
+<li>Yani dizi sabit $0$ dizisidir: $a_n = 0$ tüm $n$ için.</li>
+<li>$\displaystyle\lim_{n\to\infty} a_n = \boxed{0}$.</li>
+</ol>
+<div class="verify"><strong>Verification Note:</strong> $\sin(\pi x)$ sürekli fonksiyon olarak $\lim_{x\to\infty}\sin(\pi x)$ limiti mevcut değildir; ama $n$ tam sayı kısıtlamasıyla $\sin(\pi n)=0$.</div>
+</div>
+</div></div>
+
+<!-- Q4 -->
+<div class="qcard">
+<div class="qheader">SORU 4 — Recursive Sequence</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Consider the sequence $a_1 = 1,\; a_n = 1 + \dfrac{a_{n-1}}{2}$ for $n \ge 2$. (i) Show $a_n < 2$ for all $n$. (ii) Show $a_n < a_{n+1}$ for all $n$. (iii) Find $\displaystyle\lim_{n\to\infty} a_n$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p><strong>Mathematical Induction (Tümevarım) + Monotone Convergence Theorem:</strong> Artan (increasing) ve üstten sınırlı (bounded above) bir dizi her zaman yakınsar (converges).</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<p><strong>(i) $a_n < 2$: Mathematical Induction</strong></p>
+<ol class="steps">
+<li><em>Base case:</em> $a_1 = 1 < 2$. ✓</li>
+<li><em>Inductive step:</em> $a_k < 2$ varsay. O zaman $a_{k+1} = 1 + \dfrac{a_k}{2} < 1 + \dfrac{2}{2} = 2$. ✓</li>
+</ol>
+<p style="margin-top:.8rem"><strong>(ii) $a_n < a_{n+1}$: Mathematical Induction</strong></p>
+<ol class="steps">
+<li><em>Base case:</em> $a_1=1,\; a_2=1+\frac{1}{2}=\frac{3}{2}$. $1 < \frac{3}{2}$. ✓</li>
+<li><em>Inductive step:</em> $a_k < a_{k+1}$ varsay. Rekürans formülünü uygula:
+$$a_{k+1} = 1+\frac{a_k}{2} < 1+\frac{a_{k+1}}{2} = a_{k+2}.$$</li>
+</ol>
+<p style="margin-top:.8rem"><strong>(iii) Limit:</strong></p>
+<ol class="steps">
+<li>Dizi artan (monotone increasing) ve üstten sınırlı (bounded above by 2), dolayısıyla Monotone Convergence Theorem gereği $L = \lim a_n$ mevcuttur.</li>
+<li>Rekürans formülünde limit al: $L = 1 + \dfrac{L}{2}$.</li>
+<li>Çöz: $\dfrac{L}{2} = 1 \Rightarrow L = \boxed{2}$.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Recursive dizilerde limit bulmak için önce convergence'ı göster (Monotone Convergence), sonra reküransta $a_n, a_{n+1} \to L$ koy ve çöz.</div>
+</div></div>
+
+<!-- Q5 -->
+<div class="qcard">
+<div class="qheader">SORU 5 — Fibonacci-Type Sequence</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>$a_1=1,\; a_2=2,\; a_n = a_{n-1}+a_{n-2}$ for $n\ge 3$. Given that $\left\{\dfrac{a_{n+1}}{a_n}\right\}$ has a positive limit, find $\displaystyle\lim_{n\to\infty}\frac{a_{n+1}}{a_n}$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$L = \displaystyle\lim_{n\to\infty}\frac{a_{n+1}}{a_n}$ (pozitif ve var olduğu verilmiş).</li>
+<li>Rekürans $a_n = a_{n-1}+a_{n-2}$'yi $a_{n-1}$'e böl:
+$$\frac{a_n}{a_{n-1}} = 1 + \frac{a_{n-2}}{a_{n-1}} = 1 + \frac{1}{a_{n-1}/a_{n-2}}.$$</li>
+<li>$n\to\infty$ limitini al: $L = 1 + \dfrac{1}{L}$.</li>
+<li>$L^2 = L+1 \Rightarrow L^2-L-1=0 \Rightarrow L = \dfrac{1\pm\sqrt{5}}{2}$. Pozitif kök: $\displaystyle L = \boxed{\dfrac{1+\sqrt{5}}{2}} \approx 1.618$ (Golden Ratio).</li>
+</ol>
+<div class="verify"><strong>Verification Note:</strong> $a_1=1,a_2=2,a_3=3,a_4=5,a_5=8$. Oranlar: $2,1.5,1.667,1.6,\ldots\to\varphi\approx1.618$. ✓</div>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Fibonacci türü dizilerde $a_{n+1}/a_n \to \varphi$ (altın oran). Limit denklem kurma tekniği Fibonacci'nin ötesinde pek çok recursive diziye uygulanır.
+<div class="formula-box">$$\varphi = \frac{1+\sqrt{5}}{2} \approx 1.618\ldots$$</div>
+</div>
+</div></div>
+
+</div><!-- week-body -->
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ WEEK 2 ══ -->
+<section class="week" id="w2">
+<div class="week-header" onclick="this.parentElement.classList.toggle('collapsed')">
+  <h2>Hafta 2</h2>
+  <span class="topic">Series — Convergence Tests, Telescoping & Geometric Sums</span>
+  <span class="toggle">[daralt/genişlet]</span>
+</div>
+<div class="week-body">
+
+<!-- Q1 -->
+<div class="qcard">
+<div class="qheader">SORU 1 — Telescoping Series</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find the sum of the series $\displaystyle\sum_{k=1}^{\infty}\ln\!\left(\frac{\arctan(k+1)}{\arctan k}\right)$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p><strong>Telescoping Series:</strong> $\ln(A/B) = \ln A - \ln B$ ile partial sum $S_N$ çoğu terimi iptal eder.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>Logaritma özelliği: $\ln\!\dfrac{\arctan(k+1)}{\arctan k} = \ln(\arctan(k+1)) - \ln(\arctan k)$.</li>
+<li>Partial sum:
+$$S_N = \sum_{k=1}^N [\ln(\arctan(k+1))-\ln(\arctan k)] = \ln(\arctan(N+1)) - \ln(\arctan 1).$$</li>
+<li>Limit: $\displaystyle\lim_{N\to\infty}\arctan(N+1) = \frac{\pi}{2}$ ve $\arctan(1)=\frac{\pi}{4}$.</li>
+<li>$$S = \ln\frac{\pi}{2} - \ln\frac{\pi}{4} = \ln\!\left(\frac{\pi/2}{\pi/4}\right) = \boxed{\ln 2}.$$</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> $\ln(a_{k+1}/a_k)$ yapısı hemen Telescoping Series işaret eder. Partial sum yazıp $N\to\infty$ al.</div>
+</div></div>
+
+<!-- Q2 -->
+<div class="qcard">
+<div class="qheader">SORU 2 — $\sum a_n$ yakınsarsa $\sum\cos(a_n)$ ıraksadığını göster</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Show that if $\displaystyle\sum_{n=1}^\infty a_n$ converges, then $\displaystyle\sum_{n=1}^\infty \cos(a_n)$ diverges.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li><strong>Divergence Test (n-inci terim testi):</strong> Bir serinin yakınsaması için gerekli koşul: $\lim_{n\to\infty} b_n = 0$.</li>
+<li>$\sum a_n$ yakınsarsa, $\lim_{n\to\infty} a_n = 0$.</li>
+<li>O zaman $\lim_{n\to\infty}\cos(a_n) = \cos(0) = 1 \neq 0$.</li>
+<li>$\sum\cos(a_n)$'nin genel terimi $1$'e gidiyor, sıfıra gitmiyor. Divergence Test gereği $\sum\cos(a_n)$ <strong>ıraksar (diverges)</strong>. $\square$</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> $\lim b_n \neq 0$ ise seri <em>kesinlikle</em> ıraksar. Bu sadece gerekli koşuldur (sufficient değil), ama burada yeterlidir.</div>
+</div></div>
+
+<!-- Q3 -->
+<div class="qcard">
+<div class="qheader">SORU 3 — Geometric Series Sums</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\displaystyle\sum_{n=4}^{\infty}\left(-\frac{5}{8}\right)^n$ &emsp; (b) $\displaystyle\sum_{n=1}^{\infty}\sin^{2n}\!\theta,\quad 0<\theta<\frac{\pi}{2}$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p><strong>Geometric Series Formula:</strong> $\displaystyle\sum_{n=0}^\infty r^n = \frac{1}{1-r},\ |r|<1$. İlk terimi ve ortak oranı doğru belirle.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $r = -5/8$, ilk terim $n=4$:</p>
+<ol class="steps">
+<li>$\displaystyle\sum_{n=4}^{\infty}\left(-\frac{5}{8}\right)^n = \frac{\left(-\frac{5}{8}\right)^4}{1-\left(-\frac{5}{8}\right)}= \frac{\frac{625}{4096}}{\frac{13}{8}}$.</li>
+<li>$= \dfrac{625}{4096}\cdot\dfrac{8}{13} = \dfrac{5000}{53248} = \boxed{\dfrac{625}{6656}}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $\sum_{n=1}^\infty \sin^{2n}\theta = \sum_{n=1}^\infty (\sin^2\theta)^n$:</p>
+<ol class="steps">
+<li>$0<\theta<\pi/2$ için $0 < \sin^2\theta < 1$, dolayısıyla geometric series yakınsar.</li>
+<li>$r=\sin^2\theta$, $n=1$'den başlar:
+$$\sum_{n=1}^\infty r^n = \frac{r}{1-r} = \frac{\sin^2\theta}{1-\sin^2\theta} = \frac{\sin^2\theta}{\cos^2\theta} = \boxed{\tan^2\theta}.$$</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Geometric seriste ilk terimi $a = r^{n_0}$ (başlangıç indisi), ortak oranı $r$ belirle: $S = a/(1-r)$.</div>
+</div></div>
+
+<!-- Q4 -->
+<div class="qcard">
+<div class="qheader">SORU 4 — Convergence Tests (5 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\sum \dfrac{1}{2n^2-n}$ &emsp;(b) $\sum_{k=2}^\infty \dfrac{1}{\ln k}$ &emsp;(c) $\sum_{k=1}^\infty \sin(1/k)$ &emsp;(d) $\sum_{k=1}^\infty\!\left(\dfrac{\pi}{2}-\arctan k^2\right)$ &emsp;(e) $\sum_{n=2}^\infty \dfrac{1}{n\ln n}$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<ul>
+  <li><strong>Limit Comparison Test:</strong> $\lim_{n\to\infty} a_n/b_n = c > 0$ ise $\sum a_n$ ve $\sum b_n$ aynı davranır.</li>
+  <li><strong>p-series:</strong> $\sum 1/n^p$ yakınsar $\iff p>1$.</li>
+  <li><strong>Integral Test:</strong> $f$ azalan, pozitif, sürekli ise $\sum a_n$ ve $\int f$ aynı davranır.</li>
+  <li><strong>Comparison Test:</strong> $0\le a_n\le b_n$ ise: $\sum b_n$ yakınsarsa $\sum a_n$ yakınsar; $\sum a_n$ ıraksarsa $\sum b_n$ ıraksar.</li>
+</ul>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $\sum \dfrac{1}{2n^2-n}$</p>
+<ol class="steps">
+<li>Limit Comparison Test ile $b_n = 1/n^2$ al: $\lim_{n\to\infty}\dfrac{1/(2n^2-n)}{1/n^2}=\lim_{n\to\infty}\dfrac{n^2}{2n^2-n}=\dfrac{1}{2}>0$.</li>
+<li>$\sum 1/n^2$ yakınsar ($p=2>1$), dolayısıyla $\sum \dfrac{1}{2n^2-n}$ <strong>yakınsar (converges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $\sum_{k=2}^\infty \dfrac{1}{\ln k}$</p>
+<ol class="steps">
+<li>$\ln k < k$ (tüm $k\ge 2$), dolayısıyla $\dfrac{1}{\ln k} > \dfrac{1}{k}$.</li>
+<li>$\sum 1/k$ ıraksar (harmonic series), Comparison Test: $\sum \dfrac{1}{\ln k}$ <strong>ıraksar (diverges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $\sum_{k=1}^\infty \sin(1/k)$</p>
+<ol class="steps">
+<li>$\lim_{k\to\infty}\dfrac{\sin(1/k)}{1/k} = 1 > 0$ (Limit Comparison Test ile $b_k=1/k$).</li>
+<li>$\sum 1/k$ ıraksar, dolayısıyla $\sum\sin(1/k)$ <strong>ıraksar (diverges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $\sum_{k=1}^\infty \left(\dfrac{\pi}{2}-\arctan k^2\right)$</p>
+<ol class="steps">
+<li>$\dfrac{\pi}{2}-\arctan k^2 = \arctan\dfrac{1}{k^2}$ (tamamlayıcı arctan kimliği veya $\pi/2-\arctan x=\arctan(1/x)$ for $x>0$) için $k$ büyük.</li>
+<li>$\lim_{k\to\infty}\dfrac{\arctan(1/k^2)}{1/k^2}=1$ (Limit Comparison ile $b_k=1/k^2$).</li>
+<li>$\sum 1/k^2$ yakınsar, dolayısıyla bu seri <strong>yakınsar (converges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(e)</strong> $\sum_{n=2}^\infty \dfrac{1}{n\ln n}$</p>
+<ol class="steps">
+<li>Integral Test: $f(x)=\dfrac{1}{x\ln x}$ pozitif, azalan ve sürekli ($x\ge 2$).</li>
+<li>$\displaystyle\int_2^\infty \frac{dx}{x\ln x} = \Big[\ln(\ln x)\Big]_2^\infty = +\infty$. İntegral ıraksar.</li>
+<li>Dolayısıyla $\sum \dfrac{1}{n\ln n}$ <strong>ıraksar (diverges)</strong>.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> $1/(n\ln n)$ p-series'den daha yavaş ıraksar — Integral Test ile yakalanır. $\sin(1/k)\sim 1/k$ (Limit Comparison ile).</div>
+</div></div>
+
+<!-- Q5 -->
+<div class="qcard">
+<div class="qheader">SORU 5 — More Convergence Tests (4 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\sum \dfrac{1}{n\sqrt{n^2+3}}$ &emsp;(b) $\sum \dfrac{n^3}{3^n}$ &emsp;(c) $\sum \dfrac{1}{n^n}$ &emsp;(d) $\sum \dfrac{n!}{n^n}$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<ul>
+  <li><strong>Ratio Test (d'Alembert):</strong> $L=\lim|a_{n+1}/a_n|$. $L<1$ yakınsar, $L>1$ ıraksar.</li>
+  <li><strong>Root Test (Cauchy):</strong> $L=\lim\sqrt[n]{|a_n|}$. Aynı kural.</li>
+</ul>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> Limit Comparison ile $b_n = 1/n^2$:</p>
+<ol class="steps">
+<li>$\lim_{n\to\infty}\dfrac{n^2}{n\sqrt{n^2+3}}=\lim\dfrac{n}{\sqrt{n^2+3}}=1>0$.</li>
+<li>$\sum 1/n^2$ yakınsar → <strong>yakınsar (converges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> Ratio Test:</p>
+<ol class="steps">
+<li>$\dfrac{a_{n+1}}{a_n}=\dfrac{(n+1)^3}{3^{n+1}}\cdot\dfrac{3^n}{n^3}=\dfrac{1}{3}\left(\dfrac{n+1}{n}\right)^3\to\dfrac{1}{3}<1$.</li>
+<li><strong>Yakınsar (converges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> Comparison Test:</p>
+<ol class="steps">
+<li>$n^n \ge 2^n$ ($n\ge 2$ için), dolayısıyla $0<\dfrac{1}{n^n}\le\dfrac{1}{2^n}$.</li>
+<li>$\sum 1/2^n$ geometric → yakınsar; Comparison: <strong>yakınsar (converges)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> Ratio Test:</p>
+<ol class="steps">
+<li>$\dfrac{a_{n+1}}{a_n}=\dfrac{(n+1)!}{(n+1)^{n+1}}\cdot\dfrac{n^n}{n!}=\dfrac{n^n}{(n+1)^n}=\left(\dfrac{n}{n+1}\right)^n=\dfrac{1}{\left(1+\frac{1}{n}\right)^n}\to\dfrac{1}{e}<1$.</li>
+<li><strong>Yakınsar (converges)</strong>.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong>
+<div class="formula-box">$$\lim_{n\to\infty}\left(\frac{n}{n+1}\right)^n = \frac{1}{e}\approx 0.368 < 1.$$</div>
+Bu limit Ratio Test'te sık çıkar — ezberle!</div>
+</div></div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ WEEK 3 ══ -->
+<section class="week" id="w3">
+<div class="week-header" onclick="this.parentElement.classList.toggle('collapsed')">
+  <h2>Hafta 3</h2>
+  <span class="topic">Power Series — Absolute/Conditional Convergence, Radius &amp; Interval of Convergence</span>
+  <span class="toggle">[daralt/genişlet]</span>
+</div>
+<div class="week-body">
+
+<!-- Q1 -->
+<div class="qcard">
+<div class="qheader">SORU 1 — Convergence Tests</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\displaystyle\sum_{n=1}^\infty \frac{n^3}{3^n}$ &emsp; (b) $\displaystyle\sum_{n=1}^\infty \frac{n!}{n^n}$</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<p><strong>(a)</strong> Ratio Test: $\dfrac{(n+1)^3}{3^{n+1}}\cdot\dfrac{3^n}{n^3}=\dfrac{1}{3}\left(1+\frac{1}{n}\right)^3\to\dfrac{1}{3}<1$ → <strong>Yakınsar</strong>.</p>
+<p><strong>(b)</strong> Daha önce Hafta 2'de gösterildi: $\dfrac{a_{n+1}}{a_n}\to\dfrac{1}{e}<1$ → <strong>Yakınsar</strong>.</p>
+</div>
+</div></div>
+
+<!-- Q2 -->
+<div class="qcard">
+<div class="qheader">SORU 2 — Absolute / Conditional Convergence</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Which converge absolutely, conditionally, or diverge?<br>
+(a) $\displaystyle\sum_{n=2}^\infty \frac{\cos(n\pi)}{n\ln n}$ &emsp;(b) $\displaystyle\sum_{n=1}^\infty \frac{\cos(n\pi)}{n\sqrt{n}}$ &emsp;(c) $\displaystyle\sum_{n=1}^\infty \frac{(-1)^n(2n)!}{2^n(n!)^n}$ &emsp;(d) $\displaystyle\sum_{n=1}^\infty(-1)^n(\sqrt{n+1}-\sqrt{n})$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<ul>
+  <li><strong>$\cos(n\pi) = (-1)^n$.</strong></li>
+  <li><strong>Alternating Series Test (Leibniz):</strong> $b_n$ azalan, pozitif, $b_n\to 0$ ise $\sum(-1)^n b_n$ yakınsar.</li>
+  <li><strong>Absolute Convergence:</strong> $\sum|a_n|$ yakınsar.</li>
+  <li><strong>Conditional Convergence:</strong> $\sum a_n$ yakınsar ama $\sum|a_n|$ ıraksar.</li>
+</ul>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $\sum (-1)^n/(n\ln n)$</p>
+<ol class="steps">
+<li><em>Absolute convergence:</em> $\sum 1/(n\ln n)$ ıraksar (Hafta 2'de gösterildi).</li>
+<li><em>Alternating Series Test:</em> $b_n = 1/(n\ln n)$ azalan ve $\to 0$. → Yakınsar.</li>
+<li><strong>Conditionally convergent (koşullu yakınsar)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $\sum (-1)^n/n^{3/2}$</p>
+<ol class="steps">
+<li>$\sum |(-1)^n/n^{3/2}| = \sum 1/n^{3/2}$, p-series $p=3/2>1$ → Yakınsar.</li>
+<li><strong>Absolutely convergent (mutlak yakınsar)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $\sum (-1)^n (2n)!/(2^n(n!)^n)$</p>
+<ol class="steps">
+<li>Ratio Test (absolute value için): $\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{(2n+2)!}{2^{n+1}((n+1)!)^{n+1}}\cdot\dfrac{2^n(n!)^n}{(2n)!}$.</li>
+<li>$= \dfrac{(2n+2)(2n+1)}{2}\cdot\dfrac{(n!)^n}{((n+1)!)^{n+1}}= \dfrac{(2n+1)(n+1)}{(n+1)^{n+1}}\cdot\dfrac{(n!)^n}{1}$. $(n!)^n/(n+1)! \cdot \ldots$</li>
+<li>Daha basit: $(2n+2)(2n+1)/2 = (n+1)(2n+1)$; $((n+1)!)^{n+1}/(n!)^n = (n+1)^{n+1}(n!)$. Oran: $(2n+1)/(n+1)^n \cdot (n+1)/1 = (2n+1)/(n+1)^{n-1}\to 0 < 1$.</li>
+<li><strong>Absolutely convergent</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $\sum (-1)^n(\sqrt{n+1}-\sqrt{n})$</p>
+<ol class="steps">
+<li>$\sqrt{n+1}-\sqrt{n} = \dfrac{1}{\sqrt{n+1}+\sqrt{n}}\sim\dfrac{1}{2\sqrt{n}}$.</li>
+<li>$\sum (\sqrt{n+1}-\sqrt{n}) \sim \sum 1/(2\sqrt{n})$, p-series $p=1/2<1$ → ıraksar. Absolute convergence yok.</li>
+<li><em>Alternating Series Test:</em> $b_n = \sqrt{n+1}-\sqrt{n}$ azalan ve $\to 0$. → Seri yakınsar.</li>
+<li><strong>Conditionally convergent</strong>.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> $\cos(n\pi)=(-1)^n$ ezberi çok önemli. Önce absolute, sonra conditional kontrol et. $\sqrt{n+1}-\sqrt{n} = 1/(\sqrt{n+1}+\sqrt{n})$ rationalization'ı sık kullanılır.</div>
+</div></div>
+
+<!-- Q3 -->
+<div class="qcard">
+<div class="qheader">SORU 3 — Alternating Series Error Estimate</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\displaystyle\sum_{n=1}^\infty\frac{(-1)^{n-1}}{(2n)!}$, $|error|<0.001$ &emsp;(b) $\displaystyle\sum_{n=1}^\infty\frac{\cos(n\pi)}{n^4}$, $|error|\le 0.002$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p><strong>Alternating Series Estimation Theorem:</strong> $|S-S_n| \le b_{n+1}$ (bir sonraki terimin mutlak değeri).</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<p><strong>(a)</strong> $b_n = 1/(2n)!$. $|S-S_n|\le b_{n+1}=1/(2n+2)!$. $1/(2n+2)!<0.001$:</p>
+<ol class="steps">
+<li>$n=1$: $1/4!=1/24\approx 0.042$ → yetersiz.</li>
+<li>$n=2$: $1/6!=1/720\approx 0.00139$ → yetersiz.</li>
+<li>$n=3$: $1/8!=1/40320\approx 2.5\times10^{-5} < 0.001$ ✓.</li>
+<li>$\boxed{n=3}$ yeterli ($S_3$ kullan).</li>
+</ol>
+<p style="margin-top:.8rem"><strong>(b)</strong> $\sum(-1)^n/n^4$, $b_n=1/n^4$. $b_{n+1}=1/(n+1)^4\le 0.002$:</p>
+<ol class="steps">
+<li>$(n+1)^4 \ge 500 \Rightarrow n+1\ge 500^{1/4}\approx 4.73$, yani $n+1\ge 5$, $n\ge 4$.</li>
+<li>$\boxed{n=4}$ yeterli.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q4 -->
+<div class="qcard">
+<div class="qheader">SORU 4 — Power Series: Convergence Region</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>$\displaystyle\sum_{n=0}^\infty a_n x^n$ converges at $x=-4$ and diverges at $x=6$. What about: (a) $\sum a_n$ &emsp;(b) $\sum a_n(-3)^n$ &emsp;(c) $\sum a_n(-1)^n 9^n$</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$x=-4$'te yakınsarsa $|-4|=4\le R$ (Radius of Convergence). $x=6$'da ıraksarsa $R\le 6$. Yani $4\le R\le 6$.</li>
+<li><strong>(a)</strong> $x=1$: $|1|=1\le 4\le R$ → <strong>yakınsar</strong>.</li>
+<li><strong>(b)</strong> $x=-3$: $|-3|=3\le 4\le R$ → <strong>yakınsar</strong>.</li>
+<li><strong>(c)</strong> $x=(-1)\cdot 9^{1/n}\cdots$ değil; $\sum a_n(-1)^n 9^n = \sum a_n(-9)^n$, $x=-9$: $|-9|=9>6\ge R$ → <strong>ıraksar</strong>.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q5 -->
+<div class="qcard">
+<div class="qheader">SORU 5 — Radius &amp; Interval of Convergence (4 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\displaystyle\sum_{n=0}^\infty n!(x+2)^n$ &emsp;(b) $\displaystyle\sum_{n=0}^\infty \frac{(x-2)^n}{3^n}$ &emsp;(c) $\displaystyle\sum_{n=0}^\infty \frac{(2x+3)^n}{\sqrt{n+1}}$ &emsp;(d) $\displaystyle\sum_{n=3}^\infty \frac{(-1)^n x^{3n}}{8^n \ln n}$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p>Her zaman Ratio Test ile $R$ bul, sonra uç noktaları (endpoints) ayrı ayrı sına.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> Ratio Test: $\left|\dfrac{(n+1)!(x+2)^{n+1}}{n!(x+2)^n}\right| = (n+1)|x+2|\to\infty$ ($x\neq-2$ için).</p>
+<ol class="steps">
+<li>$R=0$; yalnızca $x=-2$'de yakınsar. <strong>Interval of Convergence: $\{-2\}$</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> Geometric series, $r=(x-2)/3$. $|x-2|/3<1$:</p>
+<ol class="steps">
+<li>$R=3$, merkez $x=2$. Olası interval: $(-1,5)$.</li>
+<li>$x=-1$: $\sum(-1)^n$ ıraksar. $x=5$: $\sum 1^n$ ıraksar.</li>
+<li><strong>Interval of Convergence: $(-1,5)$</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $u=2x+3$. Ratio Test: $|u|<1$ gerekir, yani $|2x+3|<1$, $|x+3/2|<1/2$.</p>
+<ol class="steps">
+<li>$R=1/2$, merkez $x=-3/2$. Olası interval: $(-2,-1)$.</li>
+<li>$x=-2$ ($u=-1$): $\sum(-1)^n/\sqrt{n+1}$ — Alternating Series Test: azalan, $\to 0$ → yakınsar.</li>
+<li>$x=-1$ ($u=1$): $\sum 1/\sqrt{n+1}$, p-series $p=1/2<1$ → ıraksar.</li>
+<li><strong>Interval of Convergence: $[-2,-1)$</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $\sum_{n=3}^\infty (-1)^n x^{3n}/8^n\ln n = \sum (-1)^n (x^3/8)^n/\ln n$. $|x^3/8|<1\Rightarrow|x|<2$.</p>
+<ol class="steps">
+<li>$R=2$, merkez $0$. Olası interval: $(-2,2)$.</li>
+<li>$x=2$: $\sum(-1)^n/\ln n$ — Alternating Series Test → <strong>yakınsar</strong>.</li>
+<li>$x=-2$: $(-2)^{3n}=(-8)^n=(-1)^n 8^n$, dolayısıyla terim $= (-1)^n(-1)^n 8^n/(8^n\ln n)=(-1)^{2n}/\ln n=1/\ln n$. $\sum 1/\ln n>\sum 1/n$ → <strong>ıraksar</strong>.</li>
+<li><strong>Interval of Convergence: $(-2,2]$</strong>.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Uç noktalarda Alternating Series Test veya p-series kontrol et. Sol ve sağ uç nokta farklı davranabilir!</div>
+</div></div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ WEEK 4 ══ -->
+<section class="week" id="w4">
+<div class="week-header" onclick="this.parentElement.classList.toggle('collapsed')">
+  <h2>Hafta 4</h2>
+  <span class="topic">Maclaurin &amp; Taylor Series — Derivatives from Series, Limits, Approximation</span>
+  <span class="toggle">[daralt/genişlet]</span>
+</div>
+<div class="week-body">
+
+<!-- Q1 -->
+<div class="qcard">
+<div class="qheader">SORU 1 — Maclaurin Series (5 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\dfrac{x^3}{(1-x^2)^2}$ &emsp;(b) $\arctan(x^3)$ &emsp;(c) $\dfrac{x}{3-x^2}$ &emsp;(d) $\dfrac{1-e^{-2x}}{x}$ &emsp;(e) $\sin\!\left(x+\dfrac{\pi}{3}\right)$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<p>Temel Maclaurin serileri (ezberlenmeli):</p>
+<div class="formula-box">
+$$\frac{1}{1-u}=\sum_{n=0}^\infty u^n,\quad \frac{1}{(1-u)^2}=\sum_{n=0}^\infty (n+1)u^n,\quad \arctan u=\sum_{n=0}^\infty\frac{(-1)^n u^{2n+1}}{2n+1}$$
+$$e^u=\sum_{n=0}^\infty\frac{u^n}{n!},\quad \sin u=\sum_{n=0}^\infty\frac{(-1)^n u^{2n+1}}{(2n+1)!},\quad \cos u=\sum_{n=0}^\infty\frac{(-1)^n u^{2n}}{(2n)!}$$
+</div>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $\dfrac{x^3}{(1-x^2)^2}$</p>
+<ol class="steps">
+<li>$u=x^2$ koy: $\dfrac{1}{(1-u)^2}=\sum_{n=0}^\infty(n+1)u^n=\sum_{n=0}^\infty(n+1)x^{2n}$, $|x|<1$.</li>
+<li>$x^3$ ile çarp: $\dfrac{x^3}{(1-x^2)^2}=\sum_{n=0}^\infty(n+1)x^{2n+3}$, $|x|<1$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $\arctan(x^3)$</p>
+<ol class="steps">
+<li>$\arctan u=\sum_{n=0}^\infty\dfrac{(-1)^n u^{2n+1}}{2n+1}$, $u=x^3$ koy:</li>
+<li>$$\arctan(x^3)=\sum_{n=0}^\infty\frac{(-1)^n x^{6n+3}}{2n+1},\quad |x|\le1.$$</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $\dfrac{x}{3-x^2}$</p>
+<ol class="steps">
+<li>$\dfrac{x}{3-x^2}=\dfrac{x}{3}\cdot\dfrac{1}{1-x^2/3}=\dfrac{x}{3}\sum_{n=0}^\infty\left(\frac{x^2}{3}\right)^n$, $|x^2/3|<1$ yani $|x|<\sqrt{3}$.</li>
+<li>$$=\sum_{n=0}^\infty\frac{x^{2n+1}}{3^{n+1}},\quad |x|<\sqrt{3}.$$</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $\dfrac{1-e^{-2x}}{x}$</p>
+<ol class="steps">
+<li>$e^{-2x}=\sum_{n=0}^\infty\dfrac{(-2x)^n}{n!}=\sum_{n=0}^\infty\dfrac{(-1)^n 2^n x^n}{n!}$.</li>
+<li>$1-e^{-2x}=\sum_{n=1}^\infty\dfrac{(-1)^{n+1}2^n x^n}{n!}$.</li>
+<li>$x$'e böl ($x\neq 0$): $\dfrac{1-e^{-2x}}{x}=\sum_{n=1}^\infty\dfrac{(-1)^{n+1}2^n x^{n-1}}{n!}=\sum_{n=0}^\infty\dfrac{(-1)^n 2^{n+1} x^n}{(n+1)!}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(e)</strong> $\sin(x+\pi/3)$</p>
+<ol class="steps">
+<li>Angle addition: $\sin(x+\pi/3)=\sin x\cos(\pi/3)+\cos x\sin(\pi/3)=\dfrac{1}{2}\sin x+\dfrac{\sqrt{3}}{2}\cos x$.</li>
+<li>Serileri yerleştir:
+$$=\frac{1}{2}\sum_{n=0}^\infty\frac{(-1)^n x^{2n+1}}{(2n+1)!}+\frac{\sqrt{3}}{2}\sum_{n=0}^\infty\frac{(-1)^n x^{2n}}{(2n)!},\quad x\in\mathbb{R}.$$</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> $1/(1-u)^2=\sum(n+1)u^n$ formülü önemli; $d/du[1/(1-u)]=1/(1-u)^2$ ile türetilebilir. Tüm bu seriler "yerine koyma" (substitution) ile elde edilir.</div>
+</div></div>
+
+<!-- Q2 -->
+<div class="qcard">
+<div class="qheader">SORU 2 — Taylor Series at $x=-2$</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find the Taylor series of $f(x)=xe^{2x}$ in powers of $x+2$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$t=x+2$ (yani $x=t-2$) koy. $f(x)=(t-2)e^{2(t-2)}=(t-2)e^{-4}e^{2t}$.</li>
+<li>$e^{2t}=\sum_{n=0}^\infty\dfrac{(2t)^n}{n!}=\sum_{n=0}^\infty\dfrac{2^n t^n}{n!}$.</li>
+<li>$(t-2)e^{-4}\sum_{n=0}^\infty\dfrac{2^n t^n}{n!}=e^{-4}\left[\sum_{n=0}^\infty\dfrac{2^n t^{n+1}}{n!}-2\sum_{n=0}^\infty\dfrac{2^n t^n}{n!}\right]$.</li>
+<li>İndis kaydırması ($n\to n-1$ birinci toplam için):
+$$=e^{-4}\left[\sum_{n=1}^\infty\frac{2^{n-1}t^n}{(n-1)!}-\sum_{n=0}^\infty\frac{2^{n+1}t^n}{n!}\right].$$</li>
+<li>$n=0$ terimi (sabit terim): $e^{-4}(-2)$. $n\ge 1$ için katsayı:
+$$e^{-4}\left[\frac{2^{n-1}}{(n-1)!}-\frac{2^{n+1}}{n!}\right]=e^{-4}\cdot\frac{2^{n-1}}{n!}\left[n-4\right].$$</li>
+<li>Sonuç:
+$$xe^{2x}=e^{-4}\left[-2+\sum_{n=1}^\infty\frac{2^{n-1}(n-4)}{n!}(x+2)^n\right].$$</li>
+</ol>
+<div class="verify"><strong>Verification Note:</strong> $n=1$: katsayı $e^{-4}\cdot\frac{1\cdot(-3)}{1}=-3e^{-4}$. $f'(x)=e^{2x}+2xe^{2x}$, $f'(-2)=e^{-4}-4e^{-4}=-3e^{-4}$. ✓</div>
+</div>
+</div></div>
+
+<!-- Q3 -->
+<div class="qcard">
+<div class="qheader">SORU 3 — Sums via Power Series (4 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\displaystyle\sum_{n=1}^\infty\frac{n^2}{2^{n-3}}$ &emsp;(b) $\displaystyle\sum_{n=1}^\infty\frac{(-1)^n 3^n}{n\cdot 4^{n+5}}$ &emsp;(c) $\displaystyle\sum_{n=2}^\infty n(n-1)x^n,\ |x|<1$ &emsp;(d) $\displaystyle\sum_{n=1}^\infty\frac{n^2-n}{2^n}$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<div class="formula-box">
+$$\sum_{n=0}^\infty x^n=\frac{1}{1-x}\xrightarrow{\text{türev}}\sum_{n=1}^\infty nx^{n-1}=\frac{1}{(1-x)^2}\xrightarrow{\times x}\sum_{n=1}^\infty nx^n=\frac{x}{(1-x)^2}$$
+$$\xrightarrow{\text{türev}}\sum_{n=1}^\infty n^2 x^{n-1}=\frac{1+x}{(1-x)^3}\xrightarrow{\times x}\sum_{n=1}^\infty n^2 x^n=\frac{x(1+x)}{(1-x)^3}$$
+$$\sum_{n=1}^\infty\frac{(-1)^{n-1}x^n}{n}=\ln(1+x),\ |x|\le1,\ x\neq-1.$$
+</div>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $\sum n^2/2^{n-3}=8\sum n^2(1/2)^n$. $x=1/2$, $\sum n^2 x^n=x(1+x)/(1-x)^3$:</p>
+<ol class="steps">
+<li>$x=\frac{1}{2}$: $\dfrac{\frac{1}{2}\cdot\frac{3}{2}}{\left(\frac{1}{2}\right)^3}=\dfrac{\frac{3}{4}}{\frac{1}{8}}=6$.</li>
+<li>$8\cdot 6=\boxed{48}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $\sum_{n=1}^\infty\dfrac{(-1)^n 3^n}{n\cdot 4^{n+5}}=\dfrac{1}{4^5}\sum_{n=1}^\infty\dfrac{(-3/4)^n}{n}$:</p>
+<ol class="steps">
+<li>$\sum_{n=1}^\infty\dfrac{u^n}{n}=-\ln(1-u)$ (standart seri). $u=-3/4$:</li>
+<li>$\sum\dfrac{(-3/4)^n}{n}=-\ln(1+3/4)=-\ln(7/4)$.</li>
+<li>Toplam: $\dfrac{-\ln(7/4)}{4^5}=\boxed{-\dfrac{\ln(7/4)}{1024}}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $\sum_{n=2}^\infty n(n-1)x^n$, $|x|<1$:</p>
+<ol class="steps">
+<li>$n(n-1)x^n=x^2\cdot n(n-1)x^{n-2}=x^2\cdot\dfrac{d^2}{dx^2}[x^n]$ yapısı.</li>
+<li>$\sum_{n=0}^\infty x^n=\dfrac{1}{1-x}\Rightarrow\dfrac{d^2}{dx^2}\left[\dfrac{1}{1-x}\right]=\dfrac{2}{(1-x)^3}=\sum_{n=2}^\infty n(n-1)x^{n-2}$.</li>
+<li>$x^2$ ile çarp: $\sum_{n=2}^\infty n(n-1)x^n=\boxed{\dfrac{2x^2}{(1-x)^3}}$, $|x|<1$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $\sum(n^2-n)/2^n=\sum n^2/2^n-\sum n/2^n$:</p>
+<ol class="steps">
+<li>(a)'dan: $\sum n^2(1/2)^n=6$. $\sum n/2^n$ için $x=1/2$: $(1/2)/(1/2)^2=2$.</li>
+<li>$6-2=\boxed{4}$.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Series türev/integral ile $(1-x)^{-k}$ serileri üret. $\sum(-x)^n/n=\ln(1+x)$ de ezberlenmeli.
+<div class="formula-box">$$\sum_{n=1}^\infty n^2 x^n=\frac{x(1+x)}{(1-x)^3},\quad\sum_{n=1}^\infty nx^n=\frac{x}{(1-x)^2},\quad |x|<1.$$</div>
+</div>
+</div></div>
+
+<!-- Q5 -->
+<div class="qcard">
+<div class="qheader">SORU 5 — $f(x)=x^3\sin(2x)$: Series, Derivatives, Integral</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) Find the Maclaurin series of $f(x)=x^3\sin(2x)$. &emsp;(b) Find $f^{(12)}(0),\; f^{(50)}(0),\; f^{(99)}(0)$. &emsp;(c) Estimate $\displaystyle\int_0^{1/2}f(x)\,dx$ with $|error|\le 2^{-15}$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong></p>
+<ol class="steps">
+<li>$\sin(2x)=\sum_{n=0}^\infty\dfrac{(-1)^n(2x)^{2n+1}}{(2n+1)!}=\sum_{n=0}^\infty\dfrac{(-1)^n 2^{2n+1}x^{2n+1}}{(2n+1)!}$.</li>
+<li>$f(x)=x^3\sin(2x)=\sum_{n=0}^\infty\dfrac{(-1)^n 2^{2n+1}}{(2n+1)!}x^{2n+4}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $f(x)=\sum c_k x^k \Rightarrow f^{(k)}(0)=k!\cdot c_k$.</p>
+<ol class="steps">
+<li>$f^{(12)}(0)$: $x^{12}$ terimi için $2n+4=12\Rightarrow n=4$. Katsayı $c_{12}=\dfrac{(-1)^4 2^9}{9!}=\dfrac{512}{362880}$. $f^{(12)}(0)=12!\cdot\dfrac{512}{9!}=512\cdot 12\cdot 11\cdot 10=\boxed{675{,}840}$.</li>
+<li>$f^{(50)}(0)$: $2n+4=50\Rightarrow n=23$. Katsayı $=\dfrac{(-1)^{23}2^{47}}{47!}$. $f^{(50)}(0)=50!\cdot\dfrac{-2^{47}}{47!}=-2^{47}\cdot50\cdot49\cdot48=\boxed{-2^{47}\cdot 117600}$.</li>
+<li>$f^{(99)}(0)$: Seri yalnızca $x^{2n+4}$ (çift+4) kuvvetleri içerir; 99 tek sayı, bu üs doğrudan çıkmaz. $f^{(99)}(0)=\boxed{0}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong></p>
+<ol class="steps">
+<li>$\displaystyle\int_0^{1/2}f(x)\,dx=\sum_{n=0}^\infty\frac{(-1)^n 2^{2n+1}}{(2n+1)!}\cdot\frac{(1/2)^{2n+5}}{2n+5}=\sum_{n=0}^\infty\frac{(-1)^n 2^{2n+1}}{(2n+1)!(2n+5)\cdot 2^{2n+5}}$.</li>
+<li>$=\sum_{n=0}^\infty\dfrac{(-1)^n}{(2n+1)!(2n+5)\cdot 2^4}=\dfrac{1}{16}\sum_{n=0}^\infty\dfrac{(-1)^n}{(2n+1)!(2n+5)}$. Bu alternating serinin $|b_{n+1}|\le 2^{-15}$'i sağlayan ilk $n$'i bul.</li>
+<li>$n=0$: $b_0=1/(1!\cdot 5\cdot 16)=1/80$. $n=1$: $b_1=1/(6\cdot 7\cdot 16)=1/672$. $n=2$: $b_2=1/(120\cdot 9\cdot 16)=1/17280\approx5.8\times10^{-5}$. $n=3$: $b_3=1/(5040\cdot11\cdot16)\approx1.1\times10^{-6}<2^{-15}\approx3.05\times10^{-5}$. Evet, $n=2$'ye kadar yeterli (hata $b_3<2^{-15}$). $\boxed{n=2}$ terimi al.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q6 -->
+<div class="qcard">
+<div class="qheader">SORU 6 — Limits via Power Series</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $\displaystyle\lim_{x\to0}\frac{x-\frac{x^3}{6}-\sin x}{x^5}$ &emsp;(b) $\displaystyle\lim_{x\to0}\frac{(e^{2x}-1)\ln(1+x^3)}{(1-\cos(3x))^2}$</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong></p>
+<ol class="steps">
+<li>$\sin x = x-\dfrac{x^3}{6}+\dfrac{x^5}{120}-\ldots$</li>
+<li>$x-\dfrac{x^3}{6}-\sin x = x-\dfrac{x^3}{6}-\left(x-\dfrac{x^3}{6}+\dfrac{x^5}{120}-\ldots\right)=-\dfrac{x^5}{120}+O(x^7)$.</li>
+<li>$\dfrac{-x^5/120+O(x^7)}{x^5}\to\boxed{-\dfrac{1}{120}}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong></p>
+<ol class="steps">
+<li>$x\to0$ için dominant terimleri al: $e^{2x}-1\approx 2x$, $\ln(1+x^3)\approx x^3$, $1-\cos(3x)\approx\dfrac{9x^2}{2}$.</li>
+<li>Pay: $(2x)(x^3)=2x^4$. Payda: $\left(\dfrac{9x^2}{2}\right)^2=\dfrac{81x^4}{4}$.</li>
+<li>Limit: $\dfrac{2x^4}{81x^4/4}=\dfrac{2\cdot 4}{81}=\boxed{\dfrac{8}{81}}$.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Limit hesaplamasında payı ve paydayı dominant kuvvete göre yaklaştır. Çarpımsal formda her faktörü ayrı ayrı yaklaştır.</div>
+</div></div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ WEEK 5 ══ -->
+<section class="week" id="w5">
+<div class="week-header" onclick="this.parentElement.classList.toggle('collapsed')">
+  <h2>Hafta 5</h2>
+  <span class="topic">Vectors in ℝ³ — Dot Product, Cross Product, Lines &amp; Planes</span>
+  <span class="toggle">[daralt/genişlet]</span>
+</div>
+<div class="week-body">
+
+<!-- Q1 -->
+<div class="qcard">
+<div class="qheader">SORU 1 — Sets in ℝ³</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) $|z|\le 2$ &emsp;(b) $x^2+z^2\le 4$ &emsp;(c) $xy=0$ &emsp;(d) $xyz=0$ &emsp;(e) $1\le x^2+y^2+z^2\le 25$</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ul>
+  <li><strong>(a)</strong> $|z|\le 2$: $z$-eksenine dik iki düzlem arasındaki <em>slab</em> (tabaka). $-2\le z\le 2$.</li>
+  <li><strong>(b)</strong> $x^2+z^2\le 4$: $y$-ekseni etrafında $r=2$ yarıçaplı katı silindir (<em>solid cylinder</em>). $y$ serbesttir.</li>
+  <li><strong>(c)</strong> $xy=0$: $x=0$ (yz-düzlemi) <em>veya</em> $y=0$ (xz-düzlemi) — iki düzlemin birleşimi.</li>
+  <li><strong>(d)</strong> $xyz=0$: $x=0$, $y=0$ ya da $z=0$ — üç koordinat düzleminin birleşimi.</li>
+  <li><strong>(e)</strong> $1\le x^2+y^2+z^2\le 25$: $r=1$ ve $r=5$ yarıçaplı küreler arasındaki <em>spherical shell</em> (içi dolu küre kabuğu).</li>
+</ul>
+</div>
+</div></div>
+
+<!-- Q2 -->
+<div class="qcard">
+<div class="qheader">SORU 2 — Vector Operations (7 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>$\vec{a}=\langle1,1,1\rangle$, $\vec{b}=2\mathbf{i}-\mathbf{j}+3\mathbf{k}=\langle2,-1,3\rangle$. Find: (a) $|\vec{a}|$ &emsp;(b) $2\vec{a}-3\vec{b}$ &emsp;(c) unit vectors &emsp;(d) $\vec{a}\cdot\vec{b}$ &emsp;(e) angle &emsp;(f) scalar projection of $\vec{a}$ onto $\vec{b}$ &emsp;(g) vector projection of $\vec{b}$ along $\vec{a}$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<div class="formula-box">
+$$\vec{a}\cdot\vec{b}=a_1b_1+a_2b_2+a_3b_3=|\vec{a}||\vec{b}|\cos\theta$$
+$$\text{Scalar Projection: }\ \text{comp}_{\vec{b}}\vec{a}=\frac{\vec{a}\cdot\vec{b}}{|\vec{b}|}\qquad\text{Vector Projection: }\ \text{proj}_{\vec{a}}\vec{b}=\frac{\vec{b}\cdot\vec{a}}{|\vec{a}|^2}\vec{a}$$
+</div>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ul>
+  <li><strong>(a)</strong> $|\vec{a}|=\sqrt{1+1+1}=\sqrt{3}$.</li>
+  <li><strong>(b)</strong> $2\vec{a}-3\vec{b}=\langle2,2,2\rangle-\langle6,-3,9\rangle=\langle-4,5,-7\rangle$.</li>
+  <li><strong>(c)</strong> $\hat{a}=\dfrac{\vec{a}}{|\vec{a}|}=\dfrac{1}{\sqrt{3}}\langle1,1,1\rangle$; $|\vec{b}|=\sqrt{4+1+9}=\sqrt{14}$, $\hat{b}=\dfrac{1}{\sqrt{14}}\langle2,-1,3\rangle$.</li>
+  <li><strong>(d)</strong> $\vec{a}\cdot\vec{b}=2-1+3=4$.</li>
+  <li><strong>(e)</strong> $\cos\theta=\dfrac{4}{\sqrt{3}\cdot\sqrt{14}}=\dfrac{4}{\sqrt{42}}$, $\theta=\arccos\!\dfrac{4}{\sqrt{42}}\approx51.9°$.</li>
+  <li><strong>(f)</strong> Scalar projection of $\vec{a}$ in direction $\vec{b}$: $\dfrac{\vec{a}\cdot\vec{b}}{|\vec{b}|}=\dfrac{4}{\sqrt{14}}$.</li>
+  <li><strong>(g)</strong> Vector projection of $\vec{b}$ along $\vec{a}$: $\dfrac{\vec{b}\cdot\vec{a}}{|\vec{a}|^2}\vec{a}=\dfrac{4}{3}\langle1,1,1\rangle$.</li>
+</ul>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Scalar projection $=$ nokta çarpım / büyüklük; Vector projection $=$ scalar projection × birim vektör.
+<div class="formula-box">$$\text{comp}_{\vec{b}}\vec{a}=\frac{\vec{a}\cdot\vec{b}}{|\vec{b}|},\qquad\text{proj}_{\vec{a}}\vec{b}=\frac{\vec{b}\cdot\vec{a}}{|\vec{a}|^2}\vec{a}.$$</div>
+</div>
+</div></div>
+
+<!-- Q3 -->
+<div class="qcard">
+<div class="qheader">SORU 3 — Vector Perpendicular to $\vec{B}$ but not Parallel to $\vec{A}$</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find $\vec{C}$ not parallel to $\vec{A}=\langle1,2,3\rangle$ but perpendicular to $\vec{B}=\langle1,-2,1\rangle$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$\vec{C}\perp\vec{B}$: $c_1-2c_2+c_3=0$.</li>
+<li>Serbestçe seç: $c_1=1,c_2=1\Rightarrow c_3=1$. $\vec{C}=\langle1,1,1\rangle$.</li>
+<li>Doğruluk: $\vec{C}\cdot\vec{B}=1-2+1=0$ ✓. $\vec{C}\parallel\vec{A}$? $\langle1,1,1\rangle=k\langle1,2,3\rangle$ olmaz ($k=1$ ama $1\neq 2$). ✓</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q4 -->
+<div class="qcard">
+<div class="qheader">SORU 4 — Area of Triangle via Cross Product</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find the area of the triangle with vertices $(1,1,1)$, $(2,2,1)$, $(0,1,5)$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<div class="formula-box">$$\text{Area} = \tfrac{1}{2}|\overrightarrow{PQ}\times\overrightarrow{PR}|$$</div>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$P=(1,1,1)$, $\overrightarrow{PQ}=\langle1,1,0\rangle$, $\overrightarrow{PR}=\langle-1,0,4\rangle$.</li>
+<li>Cross Product:
+$$\overrightarrow{PQ}\times\overrightarrow{PR}=\begin{vmatrix}\mathbf{i}&\mathbf{j}&\mathbf{k}\\1&1&0\\-1&0&4\end{vmatrix}=\langle1\cdot4-0\cdot0,-(1\cdot4-0\cdot(-1)),1\cdot0-1\cdot(-1)\rangle=\langle4,-4,1\rangle.$$</li>
+<li>$|\langle4,-4,1\rangle|=\sqrt{16+16+1}=\sqrt{33}$.</li>
+<li>Alan $=\dfrac{\sqrt{33}}{2}$.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q5 -->
+<div class="qcard">
+<div class="qheader">SORU 5 — Plane Containing a Line and Parallel to Another Plane</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find an equation of the plane that contains $x=1+t,\;y=2-t,\;z=4-3t$ and is parallel to $5x+2y+z=1$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>Paralel düzlemler aynı normal vektörü paylaşır: $\vec{n}=\langle5,2,1\rangle$.</li>
+<li>Doğru üzerindeki bir nokta ($t=0$): $(1,2,4)$.</li>
+<li>Düzlem denklemi: $5(x-1)+2(y-2)+1(z-4)=0\Rightarrow 5x+2y+z=13$.</li>
+<li>Kontrol: Doğrunun yön vektörü $\langle1,-1,-3\rangle$. $\vec{n}\cdot\langle1,-1,-3\rangle=5-2-3=0$ ✓ (doğru düzleme paralel).</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q6 -->
+<div class="qcard">
+<div class="qheader">SORU 6 — Lines in ℝ³ (3 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) Through $(1,-1,1)$ parallel to $x+2=y/2=z-3$. &emsp;(b) Through $(-1,0,1)$ perpendicular to $2x-y+7z=12$. &emsp;(c) Through $(1,3,5)$ intersecting both $L_1:x=6+3t,y=2+t,z=11+2t$ and $L_2:x=5-7s,y=4+2s,z=-s$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $x+2=y/2=z-3$ yön vektörü $\langle1,2,1\rangle$:</p>
+<ol class="steps">
+<li>Parametrik: $x=1+t,\;y=-1+2t,\;z=1+t$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> Düzlemin normal vektörü $=$ doğrunun yön vektörü: $\langle2,-1,7\rangle$:</p>
+<ol class="steps">
+<li>Parametrik: $x=-1+2t,\;y=-t,\;z=1+7t$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> Her iki doğruyla da kesişen, $(1,3,5)$'ten geçen doğru.</p>
+<ol class="steps">
+<li>$L_1$ üzerinde $Q=(6+3t,2+t,11+2t)$, $L_2$ üzerinde $R=(5-7s,4+2s,-s)$. $P=(1,3,5)$, $Q$, $R$ aynı doğru üzerinde → $\overrightarrow{PQ}\times\overrightarrow{PR}=\vec{0}$.</li>
+<li>$\overrightarrow{PQ}=\langle5+3t,-1+t,6+2t\rangle$, $\overrightarrow{PR}=\langle4-7s,1+2s,-5-s\rangle$.</li>
+<li>Cross product'ın her bileşeni sıfır: $\mathbf{i}$-bileşeni: $(-1+t)(-5-s)-(6+2t)(1+2s)=0\Rightarrow -1-11s-7t-5ts=0$ …(I). $\mathbf{k}$-bileşeni: $(5+3t)(1+2s)-(-1+t)(4-7s)=0\Rightarrow 9+3s-t+13ts=0$ …(II).</li>
+<li>(I) ve (II)'den: (I)$\times 13$+(II)$\times 5$: $-13-143s-91t-65ts+45+15s-5t+65ts=0 \Rightarrow 32-128s-96t=0\Rightarrow t=(1-4s)/3$ …(IV).</li>
+<li>(IV)'ü (I)'e koy ($-1-11s-7\cdot\frac{1-4s}{3}-5s\cdot\frac{1-4s}{3}=0$), $3$ ile çarp:
+$-3-33s-7+28s-5s+20s^2=0\Rightarrow 20s^2-10s-10=0\Rightarrow 2s^2-s-1=0\Rightarrow(2s+1)(s-1)=0$.</li>
+<li>$s=1$ veya $s=-1/2$. $s=1\Rightarrow t=(1-4)/3=-1$. $\mathbf{j}$-bileşeni ile kontrol ($s=1,t=-1$): $-49+37-(-23)-11=0$ ✓. $s=-1/2$: $\mathbf{j}$ uyuşmuyor ✗.</li>
+<li>$Q=(3,1,9)$, yön $\overrightarrow{PQ}=\langle2,-2,4\rangle\sim\langle1,-1,2\rangle$.</li>
+<li>Sonuç: $\boxed{x=1+t,\;y=3-t,\;z=5+2t}$. Doğrulama: $t=2\Rightarrow Q=(3,1,9)$ ✓; $t=-3\Rightarrow R=(-2,6,-1)=(5-7,4+2,-1)$ ✓.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q7 -->
+<div class="qcard">
+<div class="qheader">SORU 7 — Skew Lines, Plane, Perpendicular Line</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>$L_1: x=2t,y=4+t,z=11-t$ and $L_2: x=s,y=2-s,z=5+2s$. (a) Show skew. (b) Find plane $\Pi$ containing $L_1$ parallel to $L_2$. (c) Parametric equations for the line through $(0,2,5)$ perpendicular to $\Pi$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a) Skew Lines:</strong></p>
+<ol class="steps">
+<li>Yön vektörleri: $\vec{d}_1=\langle2,1,-1\rangle$, $\vec{d}_2=\langle1,-1,2\rangle$. $\vec{d}_1\neq k\vec{d}_2$ → paralel değil.</li>
+<li>Kesişiyor mu? $L_1$'den $(0,4,11)$ ($t=0$), $L_2$'ye: $s=0\Rightarrow(0,2,5)\neq(0,4,11)$. Denklem sistemi: $2t=s$, $4+t=2-s$, $11-t=5+2s$. İkinci denklem: $t+s=-2$, $2t=s\Rightarrow 3t=-2\Rightarrow t=-2/3,s=-4/3$. Üçüncü kontrol: $11+2/3=5-8/3\Rightarrow 35/3\neq 7/3$ ✗. Kesişmiyor → <strong>Skew</strong>. $\square$</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b) Plane $\Pi$:</strong></p>
+<ol class="steps">
+<li>Normal = $\vec{d}_1\times\vec{d}_2=\begin{vmatrix}\mathbf{i}&\mathbf{j}&\mathbf{k}\\2&1&-1\\1&-1&2\end{vmatrix}=\langle(2-1),-(4+1),(-2-1)\rangle=\langle1,-5,-3\rangle$.</li>
+<li>$L_1$ üzerindeki nokta $(0,4,11)$: $1(x-0)-5(y-4)-3(z-11)=0\Rightarrow x-5y-3z+20+33=0$.</li>
+<li>$\boxed{x-5y-3z+53=0}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong></p>
+<ol class="steps">
+<li>$\Pi$'ye dik doğrunun yönü $=\vec{n}=\langle1,-5,-3\rangle$.</li>
+<li>$(0,2,5)$ noktasından geçer: $\boxed{x=t,\;y=2-5t,\;z=5-3t}$.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> $\vec{n}=\vec{d}_1\times\vec{d}_2$ hem $L_1$'e hem $L_2$'ye dik olduğundan, bu normal hem $L_1$'i içeren düzlemi hem de $L_2$'ye paralel olmayı sağlar.
+<div class="formula-box">$$\text{Skew iff } \overrightarrow{P_1P_2}\cdot(\vec{d}_1\times\vec{d}_2)\neq0.$$</div>
+</div>
+</div></div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ WEEK 6 ══ -->
+<section class="week" id="w6">
+<div class="week-header" onclick="this.parentElement.classList.toggle('collapsed')">
+  <h2>Hafta 6</h2>
+  <span class="topic">Distances in ℝ³ · Multivariable Limits &amp; Continuity</span>
+  <span class="toggle">[daralt/genişlet]</span>
+</div>
+<div class="week-body">
+
+<!-- Q1 -->
+<div class="qcard">
+<div class="qheader">SORU 1 — Distance Formulas</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>(a) Distance from $(1,2,0)$ to the plane $3x-4y-5z=2$. &emsp;(b) Distance from the origin to the line of intersection of $x+y+z=0$ and $2x-y-5z=1$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<div class="formula-box">
+$$d(\text{nokta},\text{düzlem}) = \frac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}$$
+$$d(\text{nokta},\text{doğru}) = \frac{|\overrightarrow{PQ}\times\vec{d}|}{|\vec{d}|}$$
+</div>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong></p>
+<ol class="steps">
+<li>$d=\dfrac{|3(1)-4(2)-5(0)-2|}{\sqrt{9+16+25}}=\dfrac{|3-8-2|}{\sqrt{50}}=\dfrac{7}{5\sqrt{2}}=\boxed{\dfrac{7\sqrt{2}}{10}}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong></p>
+<ol class="steps">
+<li>Kesişme doğrusunun yönü: $\vec{n}_1\times\vec{n}_2=\langle1,1,1\rangle\times\langle2,-1,-5\rangle$
+$=\langle(1\cdot(-5)-1\cdot(-1)),-(1\cdot(-5)-1\cdot2),(1\cdot(-1)-1\cdot2)\rangle=\langle-4,7,-3\rangle$.</li>
+<li>Doğru üzerinde bir nokta: $z=0$; $x+y=0$, $2x-y=1\Rightarrow 3x=1\Rightarrow x=1/3,y=-1/3$. Nokta $P=(1/3,-1/3,0)$.</li>
+<li>$\overrightarrow{OP}=\langle1/3,-1/3,0\rangle$. $\overrightarrow{OP}\times\vec{d}$:
+$$\begin{vmatrix}\mathbf{i}&\mathbf{j}&\mathbf{k}\\1/3&-1/3&0\\-4&7&-3\end{vmatrix}=\langle(-1/3)(-3)-0\cdot7,-(1/3\cdot(-3)-0\cdot(-4)),(1/3\cdot7-(-1/3)(-4))\rangle=\langle1,1,1\rangle.$$</li>
+<li>$d=\dfrac{|\langle1,1,1\rangle|}{|\langle-4,7,-3\rangle|}=\dfrac{\sqrt{3}}{\sqrt{74}}=\boxed{\sqrt{\dfrac{3}{74}}}$.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q2 -->
+<div class="qcard">
+<div class="qheader">SORU 2 — Multivariable Limits (5 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Find $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$ or explain why DNE.</p>
+<p>(a) $\dfrac{x^3y}{x^2+3y^4}$ &emsp;(b) $\dfrac{\sin(3xy)}{x^2+2y^2}$ &emsp;(c) $\dfrac{2xy+3x^3}{x^2+2y^2}$ &emsp;(d) $\sqrt{x^2+y^2}\sin\!\dfrac{1}{x^2+y^2}$ &emsp;(e) $\dfrac{y^2}{x^6+y^2}e^{xy}\sin(x+y)$</p>
+</div>
+<div class="block">
+<span class="block-title bt-pre">Ön Bilgiler ve Kavramlar</span>
+<ul>
+  <li><strong>Path Test (Yol testi):</strong> Farklı yollar farklı limit verirse limit mevcut değildir (DNE).</li>
+  <li><strong>Squeeze Theorem (2D):</strong> $|f(x,y)|\le g(x,y)\to0$ ise $f\to0$.</li>
+  <li><strong>Two-Case Bounding:</strong> Paydanın dominant terimini duruma göre seç.</li>
+</ul>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $f=x^3y/(x^2+3y^4)$ — <span class="exists">LIMIT = 0</span></p>
+<ol class="steps">
+<li><strong>Durum 1:</strong> $|y|\le|x|^{1/2}$. Payda $\ge x^2$: $|f|\le|x|^3|y|/x^2\le|x|^3\cdot|x|^{1/2}/x^2=|x|^{3/2}\to0$.</li>
+<li><strong>Durum 2:</strong> $|y|>|x|^{1/2}$, yani $y^4>x^2$. Payda $\ge 3y^4$: $|f|\le|x|^3|y|/(3y^4)=|x|^3/(3y^3)$. $y^3>|x|^{3/2}$ olduğundan $|x|^3/y^3<|x|^{3/2}\to0$.</li>
+<li>Her iki durumda da $|f|\le |x|^{3/2}\to0$. $\boxed{\lim=0}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong> $\sin(3xy)/(x^2+2y^2)$ — <span class="dne">DNE</span></p>
+<ol class="steps">
+<li>$y=0$: $f=0/x^2=0\to0$.</li>
+<li>$y=x$: $\sin(3x^2)/(3x^2)\to1$ ($u=3x^2$, $\sin u/u\to1$). Farklı limitler → <strong>DNE</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $(2xy+3x^3)/(x^2+2y^2)$ — <span class="dne">DNE</span></p>
+<ol class="steps">
+<li>$y=0$: $3x^3/x^2=3x\to0$.</li>
+<li>$y=x$: $(2x^2+3x^3)/(3x^2)=(2+3x)/3\to2/3\neq0$. → <strong>DNE</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong> $\sqrt{x^2+y^2}\sin(1/(x^2+y^2))$ — <span class="exists">LIMIT = 0</span></p>
+<ol class="steps">
+<li>$r=\sqrt{x^2+y^2}$ ile: $|f|=r\cdot|\sin(1/r^2)|\le r\to0$. Squeeze Theorem: $\boxed{\lim=0}$.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(e)</strong> $\dfrac{y^2}{x^6+y^2}e^{xy}\sin(x+y)$ — <span class="exists">LIMIT = 0</span></p>
+<ol class="steps">
+<li>$y^2/(x^6+y^2)\le1$ (çünkü $x^6\ge0$). $e^{xy}\to1$.</li>
+<li>$|\sin(x+y)|\le|x+y|\le|x|+|y|\to0$. </li>
+<li>$|f|\le1\cdot e^{xy}\cdot(|x|+|y|)\to0$. $\boxed{\lim=0}$.</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Limit = 0 ispatı için 2 teknik: (1) Squeeze / bounding, (2) Dominant term analizi. Limit ≠ 0 için: 2 farklı yol farklı sonuç → DNE.
+</div>
+</div></div>
+
+<!-- Q3 -->
+<div class="qcard">
+<div class="qheader">SORU 3 — Limit at $(1,0)$</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>$f(x,y)=\dfrac{(x-1)^3y}{(x-1)^6+y^2}$. Find $\displaystyle\lim_{(x,y)\to(1,0)}f(x,y)$ if it exists.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+<ol class="steps">
+<li>$u=x-1$ ile Soru 2(a)-benzeri yapıya dönüşür: $g(u,y)=u^3y/(u^6+y^2)$.</li>
+<li>$y=0$: $g=0$. $y=u^3$: $u^6/(2u^6)=1/2\neq0$. Farklı limitler → <span class="dne">DNE</span>.</li>
+</ol>
+</div>
+</div></div>
+
+<!-- Q4 -->
+<div class="qcard">
+<div class="qheader">SORU 4 — Domain and Continuity (5 alt soru)</div>
+<div class="qbody">
+<div class="block">
+<span class="block-title bt-orig">Original Text</span>
+<p>Determine the domain and continuity set of: (a) $f=x^3y/(x^2+2y^4)$ at origin 0, (b) $f=x^2y\sqrt{120-x}/(x^6+y^2)$ at origin 0, (c) $f=e^{xy}+xy^5/(2x^6+y^4)$ at origin 1, (d) $f=1/(xy)$, (e) $f=\sqrt{4-4x^2-y^2}$.</p>
+</div>
+<div class="block">
+<span class="block-title bt-sol">Adım Adım Çözüm</span>
+
+<p><strong>(a)</strong> $f(0,0)=0$, $f=x^3y/(x^2+2y^4)$ diğer noktalar için.</p>
+<ol class="steps">
+<li>Domain: $\mathbb{R}^2$ (payda yalnızca $(0,0)$'da sıfır, orası ayrı tanımlı).</li>
+<li>$(0,0)$'da continuity: Durum 1 ($|y|\le|x|^{1/2}$): $|f|\le|x|^3|y|/x^2\le|x|^{3/2}\to0$. Durum 2 ($|y|>|x|^{1/2}$): $|f|\le|x|^3|y|/(2y^4)=|x|^3/(2y^3)<|x|^{3/2}/2\to0$.</li>
+<li>Limit $=0=f(0,0)$ → <strong>Tüm $\mathbb{R}^2$'de sürekli (continuous everywhere)</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(b)</strong></p>
+<ol class="steps">
+<li>Domain: $x\le120$ (karekök koşulu), payda $(0,0)$'da ayrı ele alınır.</li>
+<li>$y=x^3$ yolu: $f=x^2\cdot x^3\sqrt{120-x}/(x^6+x^6)=x^5\sqrt{120-x}/(2x^6)=\sqrt{120-x}/(2x)\to\infty$. Limit mevcut değil.</li>
+<li><strong>$(0,0)$'da süreksiz (discontinuous at origin)</strong>. Geri kalan domain'de ($\neq(0,0)$) süreklidir.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(c)</strong> $f(0,0)=1$.</p>
+<ol class="steps">
+<li>$e^{xy}\to1$ ve $xy^5/(2x^6+y^4)\to0$'ı göster. Durum 1 ($y^2\le|x|^3$): $|x||y|^5/(2x^6)\le|x|\cdot|x|^{15/2}/(2x^6)=|x|^{9/2}/2\to0$. Durum 2 ($y^2>|x|^3$): $|x||y|^5/y^4=|x||y|\le(x^2+y^2)\to0$.</li>
+<li>$f\to 1+0=1=f(0,0)$ → <strong>Domain: $\mathbb{R}^2$. Tüm $\mathbb{R}^2$'de sürekli</strong>.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(d)</strong></p>
+<ol class="steps">
+<li>Domain: $\{(x,y):x\neq0\text{ ve }y\neq0\}$ (iki koordinat eksenini dışla).</li>
+<li>$1/(xy)$ rasyonel fonksiyon; domain'inde süreklidir.</li>
+</ol>
+
+<p style="margin-top:.8rem"><strong>(e)</strong> $f=\sqrt{4-4x^2-y^2}$.</p>
+<ol class="steps">
+<li>$4-4x^2-y^2\ge0 \Rightarrow x^2+(y/2)^2\le1$: $x$-ekseni boyunca $a=1$, $y$-ekseni boyunca $b=2$ olan kapalı elips.</li>
+<li>Kapalı elips üzerinde ve içinde süreklidir (kapalı bounded domain).</li>
+</ol>
+</div>
+<div class="takeaway"><strong>⭐ Key Takeaway:</strong> Piecewise tanımlı iki değişkenli fonksiyonlarda $(0,0)$'da süreklilik = limitin değerle örtüşmesi. Limit ispatı için "two-case bounding" güçlü bir yöntemdir.</div>
+</div></div>
+
+</div>
+</section>
+
+<footer style="text-align:center;margin-top:3rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--divider);padding-top:1rem;">
+  MATH 120 Calculus · Spring 2025–2026 · Hafta 1–6 Tam Çözüm Kılavuzu<br>
+  <em>Tüm çözümler kurs müfredatına uygun yöntemlerle, 100% doğruluk hedefiyle hazırlanmıştır.</em>
+</footer>
+
+<script>
+// All sections start expanded; clicking header toggles
+document.querySelectorAll('.week-header').forEach(h=>{
+  h.addEventListener('click',()=>h.parentElement.classList.toggle('collapsed'));
+});
+</script>
+</body>
+</html>
