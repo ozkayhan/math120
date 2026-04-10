@@ -43,10 +43,10 @@ const swipePower = (offset: number, velocity: number) => {
 
 function App() {
   const currentWeek = useCurrentWeek();
-  const [[page, direction], setPage] = useState([currentWeek - 1, 0]);
+  const [[page, direction], setPage] = useState([0, 0]);
 
   // Panic Mode State
-  const [isPanicMode, setIsPanicMode] = useState(false);
+  const [isPanicMode, setIsPanicMode] = useState(faconst [[page, direction], setPage] = useState([0, 0]);lse);
   const [showPicker, setShowPicker] = useState(false);
   const [panicRange, setPanicRange] = useState<[number, number] | null>(null);
 
